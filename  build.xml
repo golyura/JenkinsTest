@@ -1,0 +1,12 @@
+<project name="FirstProject" default="clean.jar" basedir=".">
+
+    <target name="path">
+        <property name="srcDir" value="c:\Users\Yura\.jenkins\workspace\Task1" />
+        <property name="dstDir" value="c:\Users\Yura\.jenkins\workspace\Temp"      />
+    </target>
+
+    <target name="clean.jar" depends="path">
+        <echo>Delete all *.jar files</echo>
+        <delete file="$ {dstDir}\*.jar" />
+    </target>
+</project>
