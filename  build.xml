@@ -1,12 +1,63 @@
-<project name="FirstProject" default="clean.jar" basedir=".">
+<?xml version="1.0" encoding="UTF-8" ?>
+<!-- Первое предложение в build.xml не имеет практического значения->
+        Все содержимое <! - Ant должно содержаться в <project> </ project>,
+        name - это имя, которое вы ему даете, basedir ссылается на корневой каталог работы,
+        обозначает текущий каталог, а default - значение по умолчанию. -->
+<project name="HelloWorld" default="run" basedir=".">
+<!-- <property /> Установить переменную-->
+<property name="src" value="src"/>
+<!--<property name="src" value="src\main\java\com\epam\training"/>-->
+<property name="dest" value="classes"/>
+<property name="my_hello_jar" value="MyJenkins.jar"/>
+        <!-- Каждая цель представляет операцию, которую вы хотите сделать,
+        присваивает операции имя и значение имени, зависит от цели, от которой она зависит,
+        до выполнения цели, например, ant сначала проверит, был ли init выполнен перед компиляцией
+        Если выполнено  После этого, непосредственно выполнить компиляцию напрямую, если нет,
+        она сначала выполнит цель, от которой зависит, например, здесь init, а затем выполнит эту цель-->
+       <!-- Новая папка-->
+        <target name="init">
+            <mkdir dir="${dest}"/>
+        </target>
+       <!-- Начать редактирование-->
+        <target name="compile" depends="init">
+            <javac srcdir="${src}" destdir="${dest}"/>
+        </target>
+       <!-- Создать пакет jar-->
+        <target name="build" depends="compile">
+            <jar jarfile="${my_hello_jar}" basedir="${dest}"/>
+        </target>
+        <!-- Начни бегать-->
+        <target name="run" depends="build">
+            <java classname="Main" classpath="${my_hello_jar}"/>
+<!--            <java classname="Main" classpath="${dest}"/>-->
+        </target>
+        <!-- Удалить сгенерированный файл-->
+        <target name="clean" depends="run">
+            <delete dir="${dest}"/>
+            <delete file="${my_hello_jar}"/>
+        </target>
+<!--        <target name="rerun" depends="clean,run">-->
+<!--            <ant target="clean" />-->
+<!--            <ant target="run" />-->
+<!--        </target>-->
 
-    <target name="path">
-        <property name="srcDir" value="c:\Users\Yura\.jenkins\workspace\Task1" />
-        <property name="dstDir" value="c:\Users\Yura\.jenkins\workspace\Temp"      />
-    </target>
+        </project>
 
-    <target name="clean.jar" depends="path">
-        <echo>Delete all *.jar files</echo>
-        <delete file="$ {dstDir}\*.jar" />
-    </target>
-</project>
+
+        <!--<project name="FirstProject" default="make.dir" basedir=".">-->
+
+<!--    <target name="path">-->
+<!--        <property name="srcDir" value="c:\Users\Yura\.jenkins\workspace\Task1" />-->
+<!--        <property name="dstDir" value="c:\Users\Yura\.jenkins\workspace\Temp"      />-->
+<!--    </target>-->
+
+<!--    <target name="make.dir" description="Make a dir" depends="path">-->
+<!--        <echo>Make a directory</echo>-->
+<!--        <mkdir dir="${dstDir}" />-->
+<!--    </target>-->
+
+<!--&lt;!&ndash;    <target name="clean.jar" depends="path">&ndash;&gt;-->
+<!--&lt;!&ndash;        <echo>Delete all *.jar files</echo>&ndash;&gt;-->
+<!--&lt;!&ndash;        <delete file="${dstDir}\*.jar" />&ndash;&gt;-->
+<!--&lt;!&ndash;    </target>&ndash;&gt;-->
+<!--</project>-->

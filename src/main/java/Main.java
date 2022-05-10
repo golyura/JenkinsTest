@@ -1,5 +1,3 @@
-package com.epam.training;
-
 public class Main {
     /**
      * The start method.
